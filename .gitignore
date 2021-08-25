@@ -1,15 +1,30 @@
+# Android Studio
 *.iml
 .gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
+.idea/caches
+.idea
+.idea/
+.idea/misc.xml
+.idea/codeStyles
+.idea/libraries
+.idea/codeStyles/Project.xml
+.idea/workspace.xml
+.idea/modules.xml
+.idea/encodings.xml
+.idea/vcs.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-.DS_Store
-/build
 /captures
+/build
+app/build
+app/release
+app/jamesClient/
+
+# Local configuration file
+/local.properties
+
+# OSX files
+.DS_Store
+
+#NDK
 .externalNativeBuild
-.cxx
-local.properties
