@@ -1,6 +1,7 @@
 package io.space.data.network
 
 import io.space.BuildConfig
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -19,8 +20,13 @@ class NasaClientFactory {
         chain.proceed(
             chain.request()
                 .newBuilder()
-                .header("api_key", BuildConfig.NASA_API_KEY)
+                .url(getUrlWithKeyAsQueryParameter(chain))
                 .build()
         )
     }.build()
+
+    private fun getUrlWithKeyAsQueryParameter(chain: Interceptor.Chain) = chain.request().url
+        .newBuilder()
+        .addQueryParameter("api_key", BuildConfig.NASA_API_KEY)
+        .build()
 }
