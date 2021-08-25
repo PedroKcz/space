@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Space</string>
+    <string name="error_message">Algo de errado não está certo</string>
+    <string name="try_again">Tente novamente</string>
 </resources>

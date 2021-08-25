@@ -15,18 +15,12 @@ class SpaceViewModel(
     private val fetcher: AstronomyPictureOfTheDayFetcher
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<Async<SpaceViewState>>(Async.Loading)
-    val state: StateFlow<Async<SpaceViewState>> = _state
+    private val _state = MutableStateFlow<Async<SpaceViewState>?>(null)
+    val state: StateFlow<Async<SpaceViewState>?> = _state
 
-    init {
-        fetchPictureOfTheDay()
-    }
+    fun fetchPictureOfTheDay() {
+        _state.value = Async.Loading
 
-    fun retry() {
-        fetchPictureOfTheDay()
-    }
-
-    private fun fetchPictureOfTheDay() {
         viewModelScope.launch {
             fetcher.fetch()
                 .onSuccess { _state.value = Success(SpaceViewState(it)) }

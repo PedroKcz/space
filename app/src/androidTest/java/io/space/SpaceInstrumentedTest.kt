@@ -1,46 +1,45 @@
 package io.space
 
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-
+import com.schibsted.spain.barista.rule.BaristaRule
+import io.space.presentation.MainActivity
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.GlobalContext.stopKoin
+import org.koin.core.context.startKoin
+import org.koin.test.KoinTest
 
-import org.junit.Assert.*
-import org.junit.Rule
-
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
-
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        modules(mockedModules)
-    }
+class SpaceInstrumentedTest : KoinTest {
 
     @Rule
     @JvmField
-    val baristaRule: BaristaRule<AccountActivity> =
-        BaristaRule.create(AccountActivity::class.java)
+    val baristaRule: BaristaRule<MainActivity> =
+        BaristaRule.create(MainActivity::class.java)
+
+    @get:Rule
+    val composeTestRule = createEmptyComposeRule()
 
     @Before
     fun setUp() {
+        startKoin { modules(mockedModules) }
         baristaRule.launchActivity()
+    }
+
+    @Test
+    fun itShouldOpenSpaceViewWithRightContent() {
+        composeTestRule.onNode(hasText("bla")).assertExists()
+
+        composeTestRule.onNode(hasText("bla bla")).assertExists()
     }
 
     @After
     fun after() {
         stopKoin()
-    }
-
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("io.space", appContext.packageName)
     }
 }
